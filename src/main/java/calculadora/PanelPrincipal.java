@@ -54,11 +54,42 @@ public class PanelPrincipal extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         // Se obtiene el objeto que desencadena el evento
         Object o = ae.getSource();
+        int resultado = 0;
         // Si es un botón
         if (o instanceof JButton) {
             System.out.println(((JButton) o).getText());
             areaTexto.setText(((JButton) o).getText());
+            areaTexto.setText(((JButton) o).getText());
+
+            //Esto es en lo que me tienes que ayudar
+            /* if (o.equals(botonera.grupoBotones[10])) {*/
+            //Lo veo como posible pero no lo veo
+//                for(int i = 0 < botonera.grupoBotones.length < i++){
+//                    
+//                }
+            for (JButton boton : this.botonera.getgrupoBotones()) {
+                if (boton.equals("+")) {
+                    resultado -= Integer.parseInt(areaTexto.getText());
+                    botonera.setEnabled(false);
+                }
+            }
+
+//                resultado += Integer.parseInt(areaTexto.getText());
+//                areaTexto.setEnabled(false);
+            /*} else*/ if (o.equals("-")) {
+
+            } else if (o.equals("*")) {
+                resultado *= Integer.parseInt(areaTexto.getText());
+                botonera.setEnabled(false);
+            } else if (o.equals("/")) {
+                resultado /= Integer.parseInt(areaTexto.getText());
+                botonera.setEnabled(false);
+            } else if (o.equals("=")) {
+                areaTexto.setText(" " + resultado);
+                botonera.setEnabled(false);
+                o = "";
+            }
         }
-       
+
     }
 }
