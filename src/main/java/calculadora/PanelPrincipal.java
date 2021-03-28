@@ -67,14 +67,12 @@ public class PanelPrincipal extends JPanel implements ActionListener {
         int numeroAInt;
         int numeroBInt = 0;
         String numeroB = "";
-        Boolean intercambiar = true;
+        Boolean encontrado = true;
         String operador = "";
-        int lugar;
         int resultado = 0;
-        String aux;
+        int indiceOperador = 0;
         String resultadoString = null;
         StringBuilder sb = new StringBuilder();
-        String[] numeros = new String[2];
         String igual;
         String operacion = "";
         // Si es un botón
@@ -100,17 +98,24 @@ public class PanelPrincipal extends JPanel implements ActionListener {
                 switch (areaTexto.getText().charAt(i)) {
                     case '+':
                         operador = "+";
+                        encontrado = false;
                         break;
                     case '-':
                         operador = "-";
+                        encontrado = false;
                         break;
                     case '*':
                         operador = "*";
+                        encontrado = false;
                         break;
                     case '/':
                         operador = "/";
+                        encontrado = false;
                         break;
 
+                }
+                if (encontrado) {
+                    indiceOperador++;
                 }
             }
             //Lee el area de texto por diferenete
@@ -118,8 +123,6 @@ public class PanelPrincipal extends JPanel implements ActionListener {
                 sb.append(areaTexto.getText().charAt(i));
             }
             operacion = sb.toString();
-            System.out.println(operacion);
-            System.out.println(operador);
             //Vuelve a activar los botones después de deshabilitarlos
             for (int i = 0; i < 10; i++) {
                 if (prueba.getText().equals(Integer.toString(i)) || prueba.getText().equals("C")) {
@@ -136,51 +139,37 @@ public class PanelPrincipal extends JPanel implements ActionListener {
             }
             //Cuando se da al igual se harán todos los cálculos
             if (((JButton) o).getText() == "=") {
+
+                //Para que coger los string y cambiarlo a int
+                numeroA = areaTexto.getText().substring(0, indiceOperador);
+                numeroAInt = Integer.parseInt(numeroA);
+                numeroBInt = Integer.parseInt(areaTexto.getText().substring(indiceOperador + 1, areaTexto.getText().length() - 1));
+
+                //Para que te muestre el resultado
                 igual = areaTexto.getText().substring(numeroB.length(), areaTexto.getText().length());
                 System.out.println(areaTexto.getText());
+                
                 switch (operador) {
-                    //Te obliga que las operaciones tengan un primer número de una unidad pero funciona
                     case "+":
-                        numeroA = areaTexto.getText().substring(0, 1);
-                        numeroB = areaTexto.getText().substring(operador.length() + 1, areaTexto.getText().length() - 1);
-                        numeroAInt = Integer.parseInt(numeroA);
-                        numeroBInt = Integer.parseInt(numeroB);
                         resultado = numeroAInt + numeroBInt;
                         resultadoString = String.valueOf(resultado);
                         areaTexto.setText(resultadoString);
                         break;
                     case "-":
-                        numeroA = areaTexto.getText().substring(0, 1);
-                        numeroB = areaTexto.getText().substring(operador.length() + 1, areaTexto.getText().length() - 1);
-                        numeroAInt = Integer.parseInt(numeroA);
-                        numeroBInt = Integer.parseInt(numeroB);
                         resultado = numeroAInt - numeroBInt;
                         resultadoString = String.valueOf(resultado);
                         areaTexto.setText(resultadoString);
                         break;
                     case "*":
-                        numeroA = areaTexto.getText().substring(0, 1);
-                        numeroB = areaTexto.getText().substring(operador.length() + 1, areaTexto.getText().length() - 1);
-                        numeroAInt = Integer.parseInt(numeroA);
-                        numeroBInt = Integer.parseInt(numeroB);
                         resultado = numeroAInt * numeroBInt;
                         resultadoString = String.valueOf(resultado);
                         areaTexto.setText(resultadoString);
                         break;
                     case "/":
-                        numeroA = areaTexto.getText().substring(0, 1);
-                        numeroB = areaTexto.getText().substring(operador.length() + 1, areaTexto.getText().length() - 1);
-                        numeroAInt = Integer.parseInt(numeroA);
-                        numeroBInt = Integer.parseInt(numeroB);
                         resultado = numeroAInt / numeroBInt;
                         resultadoString = String.valueOf(resultado);
                         areaTexto.setText(resultadoString);
                         break;
-                    case "=":
-                        igual = areaTexto.getText().substring((numeroB.length() + 1) + 1, areaTexto.getText().length());
-                        System.out.println(areaTexto.getText());
-                        break;
-
                 }
             }
 
